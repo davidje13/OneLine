@@ -29,6 +29,7 @@ export class Renderer extends EventTarget {
     this._mm = this._mm.bind(this);
     this._mu = this._mu.bind(this);
 
+    this.grid.addEventListener('touchstart', prevent, { passive: false });
     this.grid.addEventListener('pointerdown', this._md, { passive: false });
 	}
 
@@ -66,6 +67,7 @@ export class Renderer extends EventTarget {
 	}
 
   destroy() {
+    this.grid.removeEventListener('touchstart', prevent);
     this.grid.removeEventListener('pointerdown', this._md);
     window.removeEventListener('pointermove', this._mm);
     window.removeEventListener('pointerup', this._mu);
@@ -208,3 +210,5 @@ export class Renderer extends EventTarget {
 		return this.hold;
 	}
 }
+
+const prevent = (e) => e.preventDefault();

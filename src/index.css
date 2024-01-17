@@ -15,7 +15,7 @@ body {
 
 .grid {
   position: relative;
-  --csize: 50px;
+  --csize: 45px;
   --frame: 0.1s;
   width: calc(var(--w) * var(--csize));
   height: calc(var(--h) * var(--csize));
