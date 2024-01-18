@@ -106,6 +106,7 @@ body {
 
 .cell {
   position: absolute;
+  box-sizing: border-box;
   left: calc(var(--x) * var(--csize));
   top: calc(var(--y) * var(--csize));
   width: var(--csize);

@@ -1,11 +1,12 @@
 export const Ice = ({
-  strength = 2,
+  strength = 3,
+  blockInteraction = false,
 } = {}) => () => {
   let hits = 0;
   let hit = false;
   return {
     allowAccess() {
-      return hits >= strength;
+      return !blockInteraction || hits >= strength;
     },
     onRemoveContent(type) {
       if (hits < strength) {
