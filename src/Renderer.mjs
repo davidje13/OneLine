@@ -1,6 +1,9 @@
 export class Renderer extends EventTarget {
-	constructor() {
+	constructor({ minScale = 20, maxScale = 100 } = {}) {
 		super();
+		this.minScale = minScale;
+		this.maxScale = maxScale;
+		this.availableSpace = { width: 360, height: 360 };
 		this.hold = document.createElement('div');
 		this.grid = document.createElement('div');
 		this.grid.className = 'grid';
@@ -73,6 +76,24 @@ export class Renderer extends EventTarget {
     window.removeEventListener('pointerup', this._mu);
   }
 
+	setAvailableSpace(width, height) {
+		this.availableSpace.width = width;
+		this.availableSpace.height = height;
+		this._rescale();
+	}
+
+	_rescale() {
+		if (!this.width || !this.height) {
+			return;
+		}
+		const scale = Math.floor(Math.min(
+			this.availableSpace.width / this.width,
+			this.availableSpace.height / this.height,
+		));
+		const clamped = Math.max(this.minScale, Math.min(this.maxScale, scale));
+		this.grid.style.setProperty('--csize', `${clamped}px`);
+	}
+
 	_getMousePos(e) {
 		const bounds = this.grid.getBoundingClientRect();
 		return {
@@ -136,6 +157,8 @@ export class Renderer extends EventTarget {
 		this.cells.clear();
 		this.contents.clear();
 		this.goals.clear();
+		this.width = 0;
+		this.height = 0;
 	}
 
 	async update(width, height, cells, moves, moveLimit, goals) {
@@ -161,10 +184,13 @@ export class Renderer extends EventTarget {
 			g.progress.textContent = `${goal.progress} / ${goal.count}`;
 		}
 
-		this.width = width;
-		this.height = height;
-		this.grid.style.setProperty('--w', width);
-		this.grid.style.setProperty('--h', height);
+		if (this.width !== width || this.height !== height) {
+			this.width = width;
+			this.height = height;
+			this.grid.style.setProperty('--w', width);
+			this.grid.style.setProperty('--h', height);
+			this._rescale();
+		}
 		const tasks = [];
 		const unseenCells = new Set(this.cells.keys());
 		const unseenContents = new Set(this.contents.keys());

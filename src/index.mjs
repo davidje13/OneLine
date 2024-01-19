@@ -5,6 +5,12 @@ import { levels } from './levels/index.mjs';
 const renderer = new Renderer();
 document.body.append(renderer.dom());
 
+function updateGameSize() {
+  renderer.setAvailableSpace(window.innerWidth - 5, window.innerHeight - 80);
+}
+window.addEventListener('resize', updateGameSize);
+updateGameSize();
+
 const game = new Game(renderer);
 renderer.addEventListener('interact', ({ detail: { position, count, followup } }) => {
   if (count === 1) {
