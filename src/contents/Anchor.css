@@ -1,0 +1,68 @@
+.anchor {
+  transition-duration: var(--frame);
+  transition-timing-function: linear;
+  transition-property: top, left;
+  --size: 50%;
+}
+
+.anchor::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: calc(var(--size) * -0.5);
+  width: var(--size);
+  height: var(--size);
+  border-radius: 100%;
+  background: #000000;
+}
+
+.anchor.accel {
+  transition-timing-function: ease-in;
+}
+
+.anchor.bounce {
+  animation: calc(var(--frame) * 3) cubic-bezier(0.66, -5.0, 0.5, 1) anchor-bounce;
+}
+
+.anchor.appear {
+  animation: var(--frame) ease anchor-appear;
+}
+
+.anchor.disappear {
+  animation: calc(var(--frame) * 1.5) ease-in anchor-disappear;
+}
+
+@keyframes anchor-appear {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes anchor-disappear {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(0, calc(var(--csize) * 2)) rotate(30deg);
+  }
+}
+
+@keyframes anchor-bounce {
+  0% {
+    transform: translate(var(--bouncex), var(--bouncey));
+  }
+
+  100% {
+    transform: translate(0, 0);
+  }
+}

@@ -1,7 +1,7 @@
 export const Space = ({
   pulls = [{ pull: { x: 0, y: -1 } }],
   spawn = null,
-  initialContent = null,
+  seed = null,
   container = null,
 } = {}) => () => {
   let content = null;
@@ -10,7 +10,12 @@ export const Space = ({
 
   return {
     initialise(scope) {
-      content = initialContent?.() ?? null;
+      if (seed) {
+        content = seed.next();
+        content?.initialise?.(scope, seed.source);
+      } else {
+        content = null;
+      }
       hold?.initialise?.(scope);
       spawning = 0;
     },

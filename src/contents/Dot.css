@@ -22,6 +22,10 @@
   --col: #dfd926;
 }
 
+.dot[data-col='cyan'], .goal.cyan {
+  --col: #26dfd9;
+}
+
 .dot::before {
   content: '';
   position: absolute;

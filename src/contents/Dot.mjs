@@ -7,6 +7,8 @@ export const Dot = (colour) => {
     sequence: 0,
     initialise(scope, source = { x: 0, y: 0 }) {
       initialOffset = source;
+      this.nextAction = 0;
+      this.sequence = 0;
     },
     step(scope) {
       if (this.nextAction === 'cull') {

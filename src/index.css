@@ -99,6 +99,10 @@ body {
   content: 'Break Ice';
 }
 
+.goal.drop-anchor .label::before {
+  content: 'Drop Anchor';
+}
+
 .goal.clear .label {
   width: 22px;
   height: 22px;
