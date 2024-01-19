@@ -1,6 +1,6 @@
 .ice {
   z-index: 11;
-  background: no-repeat 0 0 / 300% 100% url(/assets/ice.png);
+  background: no-repeat 0 0 / 300% 100% url(./ice.png);
 }
 .ice[data-hits='1'] { background-position-x: 50%; }
 .ice[data-hits='2'] { background-position-x: 100%; }

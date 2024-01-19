@@ -9,5 +9,4 @@
   background-repeat: no-repeat;
   background-size: 800% 400%;
   background-position: calc(var(--tx) * 100% / (8 - 1)) calc(var(--ty) * 100% / (4 - 1));
-  background-image: var(--tiles);
 }

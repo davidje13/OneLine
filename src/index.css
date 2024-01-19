@@ -30,6 +30,7 @@ body {
   height: 60px;
   gap: 10px;
   background: #d8ddca;
+  z-index: 20;
 }
 
 .banner-left {
