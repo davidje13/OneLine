@@ -6,16 +6,20 @@
   --size: 50%;
 }
 
-.dot[data-col='red'] {
+.dot[data-col='red'], .goal.red {
   --col: #d64e4e;
 }
 
-.dot[data-col='green'] {
+.dot[data-col='green'], .goal.green {
   --col: #79d64e;
 }
 
-.dot[data-col='blue'] {
+.dot[data-col='blue'], .goal.blue {
   --col: #4e7bd6;
+}
+
+.dot[data-col='yellow'], .goal.yellow {
+  --col: #dfd926;
 }
 
 .dot::before {

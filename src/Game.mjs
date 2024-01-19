@@ -43,7 +43,7 @@ export class Game extends EventTarget {
       },
       recordEvent(...qualifiers) {
         for (const goal of self.goals) {
-          if (goal.filters.every((f) => qualifiers.includes(f))) {
+          if (goal.progress < goal.count && goal.filters.every((f) => qualifiers.includes(f))) {
             ++goal.progress;
           }
         }
