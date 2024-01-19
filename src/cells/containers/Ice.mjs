@@ -10,7 +10,7 @@ export const Ice = ({
     },
     onRemoveContent(type) {
       if (hits < strength) {
-        if (type === 'cull' || type === 'cull-cascade') {
+        if (type === 'cull' || type === 'cull-cascade' || type === 'cull-bomb') {
           hit = true;
         }
       }

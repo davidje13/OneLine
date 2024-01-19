@@ -1,9 +1,11 @@
-import level1 from './level1.mjs';
-import level2 from './level2.mjs';
-import level3 from './level3.mjs';
+import l1 from './eight.mjs';
+import l2 from './rgby.mjs';
+import l3 from './ice.mjs';
+import l4 from './anchor.mjs';
 
 export const levels = [
-  level1,
-  level2,
-  level3,
+  l1,
+  l2,
+  l3,
+  l4,
 ];

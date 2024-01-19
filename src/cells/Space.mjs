@@ -12,7 +12,7 @@ export const Space = ({
     initialise(scope) {
       if (seed) {
         content = seed.next();
-        content?.initialise?.(scope, seed.source);
+        content?.initialise?.(seed.source);
       } else {
         content = null;
       }
@@ -37,10 +37,16 @@ export const Space = ({
       }
       return null;
     },
-    removeContent(type) {
+    replaceContent(type, newContent = null) {
       hold?.onRemoveContent?.(type);
       const oldContent = content;
-      content = null;
+      if (typeof newContent === 'function') {
+        content = newContent();
+        content?.initialise?.();
+      } else {
+        content = newContent;
+        content?.move?.();
+      }
       return oldContent;
     },
     step(scope) {
@@ -67,8 +73,8 @@ export const Space = ({
             blocks: (a) => (a.type === 'drop' && a.source === me),
             apply() {
               if (!content) {
-                content = source.removeContent('move');
-                content?.move?.(scope);
+                content = source.replaceContent('move');
+                content?.move?.();
               }
             },
           };
@@ -82,7 +88,7 @@ export const Space = ({
           apply() {
             if (!content) {
               content = spawn.next();
-              content?.initialise?.(scope, spawn.source);
+              content?.initialise?.(spawn.source);
               spawning = 2;
             }
           },

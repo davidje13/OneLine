@@ -1,3 +1,6 @@
+import { getCellsWithinLoop } from '../common/loop.mjs';
+import { Bomb } from './Bomb.mjs';
+
 export const Dot = (colour) => {
   let initialOffset;
   return {
@@ -5,7 +8,7 @@ export const Dot = (colour) => {
     colour,
     nextAction: 0,
     sequence: 0,
-    initialise(scope, source = { x: 0, y: 0 }) {
+    initialise(source = { x: 0, y: 0 }) {
       initialOffset = source;
       this.nextAction = 0;
       this.sequence = 0;
@@ -17,21 +20,30 @@ export const Dot = (colour) => {
           blocks: (a) => (a.type !== 'cull'),
           apply() {
             scope.recordEvent('cull-dot', 'direct', colour);
-            scope.getCell().removeContent?.('cull');
+            scope.getCell().replaceContent?.('cull');
           },
         };
       } else if (this.nextAction === 'cull-cascade') {
         return {
           type: 'cull-cascade',
-          blocks: (a) => (a.type !== 'cull' && a.type !== 'cull-cascade' && !a.incidental),
+          blocks: (a) => (a.type !== 'cull' && a.type !== 'cull-cascade' && a.type !== 'make-bomb' && !a.incidental),
           apply() {
             scope.recordEvent('cull-dot', 'cascade', colour);
-            scope.getCell().removeContent?.('cull-cascade');
+            scope.getCell().replaceContent?.('cull-cascade');
+          },
+        };
+      } else if (this.nextAction === 'make-bomb') {
+        return {
+          type: 'make-bomb',
+          blocks: (a) => (a.type !== 'cull' && a.type !== 'cull-cascade' && a.type !== 'make-bomb' && !a.incidental),
+          apply() {
+            scope.recordEvent('cull-dot', 'make-bomb', colour);
+            scope.getCell().replaceContent?.('make-bomb', Bomb);
           },
         };
       }
     },
-    move(scope) {
+    move() {
       initialOffset = { x: 0, y: 0 };
     },
     makeDOM(parent) {
@@ -166,20 +178,24 @@ export const Dot = (colour) => {
           }
           scope.recordMove();
           if (isLoop()) {
-            path.pop();
             scope.recordEvent('loop');
+            const checkFill = getCellsWithinLoop(path);
             for (const { x, y, cell } of scope.getAllCells()) {
               const item = cell.content?.();
-              if (item && item.type === 'dot' && item.colour === colour) {
-                item.nextAction = 'cull-cascade';
-                item.sequence = Math.abs(x - start.ix) + Math.abs(y - start.iy);
+              if (item && item.type === 'dot') {
+                if (checkFill(x, y)) {
+                  item.nextAction = 'make-bomb';
+                } else if (item.colour === colour) {
+                  item.nextAction = 'cull-cascade';
+                  item.sequence = Math.abs(x - start.ix) + Math.abs(y - start.iy);
+                }
               }
             }
+            path.pop();
             for (const { content } of path) {
               content.nextAction = 'cull';
               content.sequence = 0;
             }
-            // TODO: convert center to bombs
           } else {
             let i = 0;
             for (const { content } of path.reverse()) {

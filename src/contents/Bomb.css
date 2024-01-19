@@ -1,0 +1,91 @@
+.bomb {
+  transition-duration: var(--frame);
+  transition-timing-function: linear;
+  transition-property: top, left;
+  --size: 50%;
+}
+
+.bomb::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: calc(var(--size) * -0.5);
+  width: var(--size);
+  height: var(--size);
+  border-radius: 100%;
+  background: #000000;
+}
+
+.bomb[data-count='1']::before {
+  animation: 0.1s ease infinite alternate bomb-flash;
+}
+
+.bomb.accel {
+  transition-timing-function: ease-in;
+}
+
+.bomb.bounce {
+  animation: calc(var(--frame) * 3) cubic-bezier(0.66, -5.0, 0.5, 1) bomb-bounce;
+}
+
+.bomb.appear {
+  animation: var(--frame) ease bomb-appear;
+}
+
+.bomb.explode {
+  animation: calc(var(--frame) * 3) ease-out bomb-explode;
+}
+.bomb.explode::before {
+  background: #FF0000;
+  animation: none;
+}
+
+@keyframes bomb-appear {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes bomb-flash {
+  0% {
+    background: #000000;
+  }
+
+  100% {
+    background: #FF0000;
+  }
+}
+
+@keyframes bomb-explode {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  80% {
+    opacity: 0.5;
+    transform: scale(4);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(4.5);
+  }
+}
+
+@keyframes bomb-bounce {
+  0% {
+    transform: translate(var(--bouncex), var(--bouncey));
+  }
+
+  100% {
+    transform: translate(0, 0);
+  }
+}

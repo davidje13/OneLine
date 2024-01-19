@@ -180,8 +180,8 @@ export class Game extends EventTarget {
       }
       diff = false;
       for (const action of actions) {
-        if (!actions.some((action2) => (action2 !== action) && blocks(action2, action))) {
-          if (!actionsSoFar.some((action2) => blocks(action2, action))) {
+        if (!actions.some((action2) => (action2 !== action) && blocks(action2, action, false))) {
+          if (!actionsSoFar.some((action2) => blocks(action2, action, true))) {
             actionsSoFar.push(action);
             action.apply();
             diff = true;
@@ -212,7 +212,10 @@ export class Game extends EventTarget {
   }
 }
 
-const blocks = (a1, a2) => a1.blocks?.(a2) || a2.blockedBy?.(a1);
+const blocks = (a1, a2, alreadyApplied) => (
+  a1.blocks?.(a2) ||
+  a2.blockedBy?.(a1, alreadyApplied)
+);
 
 const VOID_INTERACTION = {
   accepted: false,
