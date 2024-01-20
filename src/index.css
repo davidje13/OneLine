@@ -11,6 +11,8 @@ body {
   background: #eff3e4;
   box-sizing: border-box;
   padding-top: 70px;
+  --atlasx: 4;
+  --atlasy: 4;
 }
 
 .grid {
@@ -79,7 +81,6 @@ body {
 }
 
 .goal .label {
-  background: #64685a;
   color: #d8ddca;
   border-radius: 100%;
   width: 30px;
@@ -95,19 +96,27 @@ body {
   font: 12px sans-serif;
 }
 
+.goal.break-ice .label {
+  background: #64685a;
+}
 .goal.break-ice .label::before {
   content: 'Break Ice';
 }
 
+.goal.drop-anchor .label {
+  background: #64685a;
+}
 .goal.drop-anchor .label::before {
   content: 'Drop Anchor';
 }
 
 .goal.clear .label {
-  width: 22px;
-  height: 22px;
-  background: var(--col);
-  box-shadow: 0 0 4px -1px #FFFFFF;
+  width: 40px;
+  height: 40px;
+  margin: -10px;
+  background-size: calc(var(--atlasx) * 100%) calc(var(--atlasy) * 100%);
+  background-image: url(./common/atlas.png);
+  background-position: calc(var(--bx) * 100% / (var(--atlasx) - 1)) calc(var(--by) * 100% / (var(--atlasy) - 1));
 }
 
 .live-canvas {

@@ -2,40 +2,35 @@
   transition-duration: var(--frame);
   transition-timing-function: linear;
   transition-property: top, left;
-  --col: grey;
-  --size: 50%;
+  background-size: calc(var(--atlasx) * 100%) calc(var(--atlasy) * 100%);
+  background-image: url(../common/atlas.png);
+  background-position: calc(var(--bx) * 100% / (var(--atlasx) - 1)) calc(var(--by) * 100% / (var(--atlasy) - 1));
 }
 
 .dot[data-col='red'], .goal.red {
   --col: #d64e4e;
+  --bx: 0;
+  --by: 0;
 }
-
 .dot[data-col='green'], .goal.green {
   --col: #79d64e;
+  --bx: 1;
+  --by: 0;
 }
-
 .dot[data-col='blue'], .goal.blue {
   --col: #4e7bd6;
+  --bx: 2;
+  --by: 0;
 }
-
 .dot[data-col='yellow'], .goal.yellow {
   --col: #dfd926;
+  --bx: 3;
+  --by: 0;
 }
-
 .dot[data-col='cyan'], .goal.cyan {
   --col: #26dfd9;
-}
-
-.dot::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin: calc(var(--size) * -0.5);
-  width: var(--size);
-  height: var(--size);
-  border-radius: 100%;
-  background: var(--col);
+  --bx: 0;
+  --by: 1;
 }
 
 .dot.accel {

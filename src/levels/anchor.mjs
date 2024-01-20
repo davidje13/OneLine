@@ -33,7 +33,7 @@ export default new Level(7, 7, { moveLimit: 30 })
   .cell(0, 6, Space({ seed: seed(Dot('green')) }))
   .cell(1, 6, Space({ seed: seed(Dot('red')) }))
   .goal('drop-anchor', ['drop-anchor'], 6)
-  .goal('clear red', ['cull-dot', 'red'], 30)
-  .goal('clear green', ['cull-dot', 'green'], 30)
-  .goal('clear blue', ['cull-dot', 'blue'], 30)
-  .goal('clear yellow', ['cull-dot', 'yellow'], 30);
+  .goal('clear red', ['cull-dot', 'red'], 20)
+  .goal('clear green', ['cull-dot', 'green'], 20)
+  .goal('clear blue', ['cull-dot', 'blue'], 20)
+  .goal('clear yellow', ['cull-dot', 'yellow'], 20);

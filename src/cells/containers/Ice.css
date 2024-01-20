@@ -1,9 +1,11 @@
 .ice {
   z-index: 11;
-  background: no-repeat 0 0 / 300% 100% url(./ice.png);
+  background-size: calc(var(--atlasx) * 100%) calc(var(--atlasy) * 100%);
+  background-image: url(../../common/atlas.png);
+  background-position: 0 calc(3 * 100% / (var(--atlasy) - 1));
 }
-.ice[data-hits='1'] { background-position-x: 50%; }
-.ice[data-hits='2'] { background-position-x: 100%; }
+.ice[data-hits='1'] { background-position: calc(1 * 100% / (var(--atlasx) - 1)) calc(3 * 100% / (var(--atlasy) - 1)); }
+.ice[data-hits='2'] { background-position: calc(2 * 100% / (var(--atlasx) - 1)) calc(3 * 100% / (var(--atlasy) - 1)); }
 
 .ice.appear {
   animation: calc(var(--frame) * 4) ease ice-appear;
