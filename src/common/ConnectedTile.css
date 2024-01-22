@@ -1,12 +1,12 @@
 .connected-tile {
-  display: grid;
-  width: 100%;
-  height: 100%;
-  grid-template: 1fr 1fr / 1fr 1fr;
+	display: grid;
+	width: 100%;
+	height: 100%;
+	grid-template: 1fr 1fr / 1fr 1fr;
 }
 
 .connected-tile > div {
-  background-repeat: no-repeat;
-  background-size: 800% 400%;
-  background-position: calc(var(--tx) * 100% / (8 - 1)) calc(var(--ty) * 100% / (4 - 1));
+	background-repeat: no-repeat;
+	background-size: 800% 400%;
+	background-position: calc(var(--tx) * 100% / (8 - 1)) calc(var(--ty) * 100% / (4 - 1));
 }

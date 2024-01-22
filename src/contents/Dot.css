@@ -1,60 +1,60 @@
 .dot {
-  transition-duration: var(--frame);
-  transition-timing-function: linear;
-  transition-property: top, left;
-  background-size: calc(var(--atlasx) * 100%) calc(var(--atlasy) * 100%);
-  background-image: url(../common/atlas.svg);
-  background-position: calc(var(--bx) * 100% / (var(--atlasx) - 1)) 0;
+	transition-duration: var(--frame);
+	transition-timing-function: linear;
+	transition-property: top, left;
+	background-size: calc(var(--atlasx) * 100%) calc(var(--atlasy) * 100%);
+	background-image: url(../common/atlas.svg);
+	background-position: calc(var(--bx) * 100% / (var(--atlasx) - 1)) 0;
 }
 
 .dot.accel {
-  transition-timing-function: ease-in;
+	transition-timing-function: ease-in;
 }
 
 .dot.bounce {
-  animation: calc(var(--frame) * 3) cubic-bezier(0.66, -5.0, 0.5, 1) dot-bounce;
+	animation: calc(var(--frame) * 3) cubic-bezier(0.66, -5.0, 0.5, 1) dot-bounce;
 }
 
 .dot.appear {
-  animation: var(--frame) ease dot-appear;
+	animation: var(--frame) ease dot-appear;
 }
 
 .dot.disappear {
-  --sequence: 0;
-  animation: calc(var(--frame) * 1.5) ease-in dot-disappear;
-  animation-delay: calc(var(--sequence) * 0.05s);
+	--sequence: 0;
+	animation: calc(var(--frame) * 1.5) ease-in dot-disappear;
+	animation-delay: calc(var(--sequence) * 0.05s);
 }
 
 @keyframes dot-appear {
-  0% {
-    opacity: 0;
-    transform: scale(0);
-  }
+	0% {
+		opacity: 0;
+		transform: scale(0);
+	}
 
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
+	100% {
+		opacity: 1;
+		transform: scale(1);
+	}
 }
 
 @keyframes dot-disappear {
-  0% {
-    opacity: 1;
-    transform: scale(1);
-  }
+	0% {
+		opacity: 1;
+		transform: scale(1);
+	}
 
-  100% {
-    opacity: 0;
-    transform: scale(2);
-  }
+	100% {
+		opacity: 0;
+		transform: scale(2);
+	}
 }
 
 @keyframes dot-bounce {
-  0% {
-    transform: translate(var(--bouncex), var(--bouncey));
-  }
+	0% {
+		transform: translate(var(--bouncex), var(--bouncey));
+	}
 
-  100% {
-    transform: translate(0, 0);
-  }
+	100% {
+		transform: translate(0, 0);
+	}
 }

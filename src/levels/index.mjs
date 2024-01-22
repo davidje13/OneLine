@@ -4,8 +4,8 @@ import l3 from './ice.mjs';
 import l4 from './anchor.mjs';
 
 export const levels = [
-  l1,
-  l2,
-  l3,
-  l4,
+	l1,
+	l2,
+	l3,
+	l4,
 ];

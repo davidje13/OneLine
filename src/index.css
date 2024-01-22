@@ -1,138 +1,138 @@
 html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
+	margin: 0;
+	padding: 0;
+	height: 100%;
 }
 
 body {
-  display: grid;
-  align-items: center;
-  justify-items: center;
-  background: #eff3e4;
-  box-sizing: border-box;
-  padding-top: 70px;
-  --atlasx: 8;
-  --atlasy: 4;
+	display: grid;
+	align-items: center;
+	justify-items: center;
+	background: #eff3e4;
+	box-sizing: border-box;
+	padding-top: 70px;
+	--atlasx: 8;
+	--atlasy: 4;
 }
 
 .grid {
-  position: relative;
-  --csize: 45px;
-  --frame: 0.1s;
-  width: calc(var(--w) * var(--csize));
-  height: calc(var(--h) * var(--csize));
+	position: relative;
+	--csize: 45px;
+	--frame: 0.1s;
+	width: calc(var(--w) * var(--csize));
+	height: calc(var(--h) * var(--csize));
 }
 
 .banner {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  display: flex;
-  height: 60px;
-  gap: 10px;
-  background: #d8ddca;
-  z-index: 20;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	display: flex;
+	height: 60px;
+	gap: 10px;
+	background: #d8ddca;
+	z-index: 20;
 }
 
 .banner-left {
-  flex: 1;
-  display: flex;
-  justify-items: start;
+	flex: 1;
+	display: flex;
+	justify-items: start;
 }
 .banner-right {
-  flex: 1;
-  display: flex;
-  justify-items: end;
+	flex: 1;
+	display: flex;
+	justify-items: end;
 }
 
 .move-count {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  font: 24px sans-serif;
-  width: 70px;
-  text-align: center;
-  padding-right: 2px;
-  background: #c0c7af;
-  border-bottom-right-radius: 20px;
-  color: #333333;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	font: 24px sans-serif;
+	width: 70px;
+	text-align: center;
+	padding-right: 2px;
+	background: #c0c7af;
+	border-bottom-right-radius: 20px;
+	color: #333333;
 }
 .move-count::after {
-  content: 'moves';
-  display: block;
-  font-size: 10px;
-  padding-bottom: 4px;
+	content: 'moves';
+	display: block;
+	font-size: 10px;
+	padding-bottom: 4px;
 }
 
 .goals-list {
-  display: flex;
-  gap: 5px;
+	display: flex;
+	gap: 5px;
 }
 
 .goal {
-  display: grid;
-  grid-template-rows: 1fr auto;
-  justify-items: center;
-  gap: 5px;
-  padding: 5px;
-  min-width: 40px;
-  color: #64685a;
+	display: grid;
+	grid-template-rows: 1fr auto;
+	justify-items: center;
+	gap: 5px;
+	padding: 5px;
+	min-width: 40px;
+	color: #64685a;
 }
 
 .goal .label {
-  color: #d8ddca;
-  border-radius: 100%;
-  width: 30px;
-  height: 30px;
-  font: 8px sans-serif;
-  display: flex;
-  text-align: center;
-  align-items: center;
-  align-self: center;
+	color: #d8ddca;
+	border-radius: 100%;
+	width: 30px;
+	height: 30px;
+	font: 8px sans-serif;
+	display: flex;
+	text-align: center;
+	align-items: center;
+	align-self: center;
 }
 
 .goal .progress {
-  font: 12px sans-serif;
+	font: 12px sans-serif;
 }
 
 .goal.break-ice .label {
-  background: #64685a;
+	background: #64685a;
 }
 .goal.break-ice .label::before {
-  content: 'Break Ice';
+	content: 'Break Ice';
 }
 
 .goal.drop-anchor .label {
-  background: #64685a;
+	background: #64685a;
 }
 .goal.drop-anchor .label::before {
-  content: 'Drop Anchor';
+	content: 'Drop Anchor';
 }
 
 .goal.clear .label {
-  width: 40px;
-  height: 40px;
-  margin: -10px;
-  background-size: calc(var(--atlasx) * 100%) calc(var(--atlasy) * 100%);
-  background-image: url(./common/atlas.svg);
-  background-position: calc(var(--bx) * 100% / (var(--atlasx) - 1)) 0;
+	width: 40px;
+	height: 40px;
+	margin: -10px;
+	background-size: calc(var(--atlasx) * 100%) calc(var(--atlasy) * 100%);
+	background-image: url(./common/atlas.svg);
+	background-position: calc(var(--bx) * 100% / (var(--atlasx) - 1)) 0;
 }
 
 .live-canvas {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 10;
-  width: 100%;
-  height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 10;
+	width: 100%;
+	height: 100%;
 }
 
 .cell {
-  position: absolute;
-  box-sizing: border-box;
-  left: calc(var(--x) * var(--csize));
-  top: calc(var(--y) * var(--csize));
-  width: var(--csize);
-  height: var(--csize);
+	position: absolute;
+	box-sizing: border-box;
+	left: calc(var(--x) * var(--csize));
+	top: calc(var(--y) * var(--csize));
+	width: var(--csize);
+	height: var(--csize);
 }
