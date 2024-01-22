@@ -17,6 +17,7 @@ renderer.addEventListener('interact', ({ detail: { position, count, followup } }
     const interaction = game.interact(position);
     followup.addEventListener('move', ({ detail: { position } }) => interaction.move(position));
     followup.addEventListener('end', () => interaction.end());
+    followup.addEventListener('cancel', () => interaction.cancel());
   }
 });
 

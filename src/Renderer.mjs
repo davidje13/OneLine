@@ -28,12 +28,13 @@ export class Renderer extends EventTarget {
 		this.height = 0;
 		this.layerCache = [];
 
-    this._md = this._md.bind(this);
-    this._mm = this._mm.bind(this);
-    this._mu = this._mu.bind(this);
+		this._md = this._md.bind(this);
+		this._mm = this._mm.bind(this);
+		this._mu = this._mu.bind(this);
+		this._mc = this._mc.bind(this);
 
-    this.grid.addEventListener('touchstart', prevent, { passive: false });
-    this.grid.addEventListener('pointerdown', this._md, { passive: false });
+		this.grid.addEventListener('touchstart', prevent, { passive: false });
+		this.grid.addEventListener('pointerdown', this._md, { passive: false });
 	}
 
 	getLayer() {
@@ -69,12 +70,17 @@ export class Renderer extends EventTarget {
 		};
 	}
 
-  destroy() {
-    this.grid.removeEventListener('touchstart', prevent);
-    this.grid.removeEventListener('pointerdown', this._md);
-    window.removeEventListener('pointermove', this._mm);
-    window.removeEventListener('pointerup', this._mu);
-  }
+	destroy() {
+		this.grid.removeEventListener('touchstart', prevent);
+		this.grid.removeEventListener('pointerdown', this._md);
+		this._removePointerEvents();
+	}
+
+	_removePointerEvents() {
+		window.removeEventListener('pointermove', this._mm);
+		window.removeEventListener('pointerup', this._mu);
+		window.removeEventListener('pointercancel', this._mc);
+	}
 
 	setAvailableSpace(width, height) {
 		this.availableSpace.width = width;
@@ -102,24 +108,25 @@ export class Renderer extends EventTarget {
 		};
 	}
 
-  _md(e) {
+	_md(e) {
 		if (e.button !== 0) {
 			return;
 		}
-    e.preventDefault();
+		e.preventDefault();
 		if (this.drag.size === 0) {
-	    window.addEventListener('pointermove', this._mm, { passive: true });
-  	  window.addEventListener('pointerup', this._mu, { passive: true, once: true });
+			window.addEventListener('pointermove', this._mm, { passive: true });
+			window.addEventListener('pointerup', this._mu, { passive: true });
+			window.addEventListener('pointercancel', this._mc, { passive: true });
 		}
 		const followup = new EventTarget();
 		this.drag.set(e.pointerId, { followup });
-    this.grid.setPointerCapture(e.pointerId);
+		this.grid.setPointerCapture(e.pointerId);
 		this.dispatchEvent(new CustomEvent('interact', {
 			detail: { position: this._getMousePos(e), count: this.drag.size, followup },
 		}));
-  }
+	}
 
-  _mm(e) {
+	_mm(e) {
 		const state = this.drag.get(e.pointerId);
 		if (!state) {
 			return;
@@ -127,9 +134,9 @@ export class Renderer extends EventTarget {
 		state.followup.dispatchEvent(new CustomEvent('move', {
 			detail: { position: this._getMousePos(e) },
 		}));
-  }
+	}
 
-  _mu(e) {
+	_mu(e) {
 		const state = this.drag.get(e.pointerId);
 		if (!state) {
 			return;
@@ -139,10 +146,22 @@ export class Renderer extends EventTarget {
 		this.grid.releasePointerCapture(e.pointerId);
 		this.drag.delete(e.pointerId);
 		if (!this.drag.size) {
-			window.removeEventListener('pointermove', this._mm);
-			window.removeEventListener('pointerup', this._mu);
+			this._removePointerEvents();
 		}
-  }
+	}
+
+	_mc(e) {
+		const state = this.drag.get(e.pointerId);
+		if (!state) {
+			return;
+		}
+		state.followup.dispatchEvent(new CustomEvent('cancel'));
+		this.grid.releasePointerCapture(e.pointerId);
+		this.drag.delete(e.pointerId);
+		if (!this.drag.size) {
+			this._removePointerEvents();
+		}
+	}
 
 	clear() {
 		for (const dom of this.cells.values()) {
