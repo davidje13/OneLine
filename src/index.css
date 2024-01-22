@@ -11,7 +11,7 @@ body {
   background: #eff3e4;
   box-sizing: border-box;
   padding-top: 70px;
-  --atlasx: 4;
+  --atlasx: 8;
   --atlasy: 4;
 }
 
@@ -115,8 +115,8 @@ body {
   height: 40px;
   margin: -10px;
   background-size: calc(var(--atlasx) * 100%) calc(var(--atlasy) * 100%);
-  background-image: url(./common/atlas.png);
-  background-position: calc(var(--bx) * 100% / (var(--atlasx) - 1)) calc(var(--by) * 100% / (var(--atlasy) - 1));
+  background-image: url(./common/atlas.svg);
+  background-position: calc(var(--bx) * 100% / (var(--atlasx) - 1)) 0;
 }
 
 .live-canvas {

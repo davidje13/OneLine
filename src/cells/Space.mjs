@@ -1,6 +1,5 @@
-export const Space = ({
+export const Space = (spawn = null) => ({
   pulls = [{ pull: { x: 0, y: -1 } }],
-  spawn = null,
   seed = null,
   container = null,
 } = {}) => () => {
@@ -11,8 +10,8 @@ export const Space = ({
   return {
     initialise(scope) {
       if (seed) {
-        content = seed.next();
-        content?.initialise?.(seed.source);
+        content = seed();
+        content?.initialise?.(pulls[0]?.pull);
       } else {
         content = null;
       }
@@ -21,6 +20,9 @@ export const Space = ({
     },
     content() {
       return content;
+    },
+    locked() {
+      return hold?.locked?.() ?? false;
     },
     interactiveContent() {
       if (!hold || hold.allowAccess()) {
@@ -58,29 +60,33 @@ export const Space = ({
         return content.step?.(scope);
       }
       const me = scope.getCell();
+      let canPull = false;
       for (const { pull, priority = 0 } of pulls) {
         const source = scope.getCell(pull.x, pull.y);
-        if (source?.content?.()) {
-          return {
-            type: 'drop',
-            source,
-            priority,
-            blockedBy: (a) => (
-              a.type === 'drop' &&
-              a.source === source &&
-              a.priority < priority
-            ),
-            blocks: (a) => (a.type === 'drop' && a.source === me),
-            apply() {
-              if (!content) {
-                content = source.replaceContent('move');
-                content?.move?.();
-              }
-            },
-          };
+        if (source && source.content && !source.locked?.()) {
+          canPull = true;
+          if (source.content()) {
+            return {
+              type: 'drop',
+              source,
+              priority,
+              blockedBy: (a) => (
+                a.type === 'drop' &&
+                a.source === source &&
+                a.priority < priority
+              ),
+              blocks: (a) => (a.type === 'drop' && a.source === me),
+              apply() {
+                if (!content) {
+                  content = source.replaceContent('move');
+                  content?.move?.();
+                }
+              },
+            };
+          }
         }
       }
-      if (spawn) {
+      if (spawn && !canPull) {
         return {
           type: 'spawn',
           blockedBy: (a) => spawn.waitForIdle && (!spawn.cascade || !spawning) && a.type === 'drop',
@@ -88,7 +94,7 @@ export const Space = ({
           apply() {
             if (!content) {
               content = spawn.next();
-              content?.initialise?.(spawn.source);
+              content?.initialise?.(pulls[0]?.pull);
               spawning = 2;
             }
           },

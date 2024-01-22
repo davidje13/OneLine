@@ -1,0 +1,20 @@
+[data-col='c1'], .goal.c1 {
+  --col: #d64e4e;
+  --bx: 0;
+}
+[data-col='c2'], .goal.c2 {
+  --col: #79d64e;
+  --bx: 1;
+}
+[data-col='c3'], .goal.c3 {
+  --col: #4e7bd6;
+  --bx: 2;
+}
+[data-col='c4'], .goal.c4 {
+  --col: #dfd926;
+  --bx: 3;
+}
+[data-col='c5'], .goal.c5 {
+  --col: #26dfd9;
+  --bx: 4;
+}

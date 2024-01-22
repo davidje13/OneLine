@@ -1,19 +1,19 @@
 import { Level } from '../Level.mjs';
 import { Space } from '../cells/Space.mjs';
 import { Dot } from '../contents/Dot.mjs';
+import { COL1, COL2, COL3, COL4, basicColours } from '../common/colours.mjs';
 
-const COLOURS = ['red', 'green', 'blue', 'yellow'];
+const COLOURS = basicColours(4);
 
-const spawn = {
+const base = Space({
   waitForIdle: true,
   cascade: true,
-  source: { x: 0, y: -1 },
   next: () => Dot(COLOURS[Math.floor(Math.random() * COLOURS.length)]),
-};
+});
 
 export default new Level(8, 8, { moveLimit: 30 })
-  .region({ y0: 0, y1: 1 }, Space({ spawn }))
-  .goal('clear red', ['cull-dot', 'red'], 20)
-  .goal('clear green', ['cull-dot', 'green'], 20)
-  .goal('clear blue', ['cull-dot', 'blue'], 20)
-  .goal('clear yellow', ['cull-dot', 'yellow'], 20);
+  .region({}, base())
+  .goal(`clear ${COL1}`, ['cull-dot', COL1], 20)
+  .goal(`clear ${COL2}`, ['cull-dot', COL2], 20)
+  .goal(`clear ${COL3}`, ['cull-dot', COL3], 20)
+  .goal(`clear ${COL4}`, ['cull-dot', COL4], 20);

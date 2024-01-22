@@ -1,11 +1,11 @@
 .ice {
   z-index: 11;
   background-size: calc(var(--atlasx) * 100%) calc(var(--atlasy) * 100%);
-  background-image: url(../../common/atlas.png);
-  background-position: 0 calc(3 * 100% / (var(--atlasy) - 1));
+  background-image: url(../../common/atlas.svg);
+  background-position: calc(1 * 100% / (var(--atlasx) - 1)) calc(3 * 100% / (var(--atlasy) - 1));
 }
-.ice[data-hits='1'] { background-position: calc(1 * 100% / (var(--atlasx) - 1)) calc(3 * 100% / (var(--atlasy) - 1)); }
-.ice[data-hits='2'] { background-position: calc(2 * 100% / (var(--atlasx) - 1)) calc(3 * 100% / (var(--atlasy) - 1)); }
+.ice[data-hits='1'] { background-position: calc(2 * 100% / (var(--atlasx) - 1)) calc(3 * 100% / (var(--atlasy) - 1)); }
+.ice[data-hits='2'] { background-position: calc(3 * 100% / (var(--atlasx) - 1)) calc(3 * 100% / (var(--atlasy) - 1)); }
 
 .ice.appear {
   animation: calc(var(--frame) * 4) ease ice-appear;

@@ -1,6 +1,6 @@
-import { Space } from './cells/Space.mjs';
+import { Void } from './cells/Void.mjs';
 
-const EMPTY = Space();
+const EMPTY = Void();
 
 export class Level {
   constructor(width, height, { moveLimit = Number.POSITIVE_INFINITY }) {
